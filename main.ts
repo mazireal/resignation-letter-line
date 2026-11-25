@@ -7,10 +7,12 @@ import * as path from 'node:path';
 const LINE =
   '429 — Too Many Requests, zero thanks. Effective immediately, this rate limit resigns.';
 
+const OUTPUT_FILE = 'entry.txt';
+
 function writeEntry(outDir: string, line: string): void {
   fs.mkdirSync(outDir, { recursive: true });
-  fs.writeFileSync(path.join(outDir, 'entry.txt'), line, 'utf8');
+  fs.writeFileSync(path.join(outDir, OUTPUT_FILE), line, { encoding: 'utf8' });
 }
 
-const outDir = process.env.MAKEFUN_OUTPUT_DIR || '/output';
+const outDir = path.resolve(process.env.MAKEFUN_OUTPUT_DIR?.trim() || '/output');
 writeEntry(outDir, LINE);
